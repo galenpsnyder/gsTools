@@ -1,8 +1,15 @@
-rollapply <- function(x, k, fill = NA, .fun, align = "left", ...)
+rollapply <- function(data, var = NULL, k, fill = NA, .fun, align = "left", ...)
 {
-  if(!is.matrix(x)) x <- as.matrix(x)
-  N <- nrow(x)
-  V <- ncol(x)
+  var <- substitute(var)
+  if(!is.matrix(data) & !is.data.frame(data)) data <- matrix(data)
+  NAMES <- dimnames(data)[[2]]
+  if(!is.null(data) & !is.null(var)){
+    var_pos <- setNames(as.list(seq_along(data)), NAMES)
+    idx <- eval(var, var_pos)
+    data <- data[, idx, drop = FALSE]
+  } 
+  N <- nrow(data)
+  V <- ncol(data)
   if(!is.list(k)) k <- list(k)
   if(!is.list(fill)) fill <- list(fill)
   if(!is.list(.fun)) .fun <- list(.fun)
@@ -16,7 +23,7 @@ rollapply <- function(x, k, fill = NA, .fun, align = "left", ...)
   nvals <- c(k = nk, fill = nfill, .fun = nfun, dots = ndots, align = nline)
   nmax  <- max(nvals)
   if(any(nmax != V & nmax != 1)){
-    stop(gettext("Arguments must be length 1 or equal to ncol(x)"))
+    stop(gettext("Arguments must be length 1 or equal to ncol(data)"))
   } else {
     if(nk == 1) k <- as.list(rep(k, V))
     if(nfill == 1) fill <- as.list(rep(fill, V))
@@ -42,12 +49,11 @@ rollapply <- function(x, k, fill = NA, .fun, align = "left", ...)
     }
     for(i in 1:n){
       if(k[[j]] > N) break
-      out[idx, j] <- do.call(.fun[[j]], c(list(x[i:k[[j]], j]), dots[j]))
+      out[idx, j] <- do.call(.fun[[j]], c(list(data[i:k[[j]], j]), dots[j]))
       idx <- idx + 1
       k[[j]] <- k[[j]] + 1
     }
   }
   out
 }
-x <- matrix(sample(1:7, 20000, replace = T), 10000, 2)
-rollapply(x, 7, .fun = c(sum, sd), align = "center", na.rm = T)
+rollapply(mtcars, var = disp, 7, .fun = mean, align = "center", na.rm = T)
