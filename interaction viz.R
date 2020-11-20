@@ -50,7 +50,7 @@ ui <- fluidPage(
       )
     ),
     mainPanel(
-      plotlyOutput({"plot"})
+      plotlyOutput({"plot"}, height = "500px")
     )
   )
 )
@@ -93,7 +93,8 @@ server <- function(input, output, session){
         scene = list(
           xaxis = list(title = "X2", range = c(5, -5)),
           yaxis = list(title = "X1", range = c(5, -5)),
-          zaxis = list(title = "Y")
+          zaxis = list(title = "Y"),
+          margin = list(b = 50)
         ),
         showlegend = FALSE
       )%>%
