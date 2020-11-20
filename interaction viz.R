@@ -2,7 +2,7 @@ library(tidyverse)
 library(shiny)
 library(plotly)
 
-# ---------- shiny app ----------
+# ---------- a shiny app for visulizing interactions in regression ----------
 ui <- fluidPage(
   sidebarLayout(
     position = "right",
@@ -91,8 +91,8 @@ server <- function(input, output, session){
       )%>%
       layout(
         scene = list(
-          xaxis = list(title = "X2"),
-          yaxis = list(title = "X1"),
+          xaxis = list(title = "X2", range = c(5, -5)),
+          yaxis = list(title = "X1", range = c(5, -5)),
           zaxis = list(title = "Y")
         ),
         showlegend = FALSE
