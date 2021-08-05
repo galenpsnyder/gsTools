@@ -1,5 +1,5 @@
 varcor <- function(x, y = NULL, adjust = TRUE, na.rm = TRUE, upper = FALSE,
-                   cor = FALSE, test = FALSE)
+                   cor = FALSE, test = FALSE, alpha = .05)
 {
   if(!is.matrix(x)) x <- as.matrix(x)
   if(is.null(y)){
@@ -55,7 +55,7 @@ varcor <- function(x, y = NULL, adjust = TRUE, na.rm = TRUE, upper = FALSE,
     v  <- v[rgc]
     se <- sqrt((1 - v^2) / (nn - 2))
     zr <- 0.5 * log((1 + v) / (1 - v))
-    zq <- qnorm(.05/2, 0, 1, lower.tail = FALSE)
+    zq <- qnorm(alpha/2, 0, 1, lower.tail = FALSE)
     zi <- zq * sqrt(1 / (nn - 3))
     cl <- exp(2 * (zr - zi))
     cl <- (cl - 1) / (cl + 1)
