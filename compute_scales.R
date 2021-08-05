@@ -56,5 +56,5 @@ compute_scales <- function(data, stem = NULL, keys = NULL, .fun = mean,
   stem <- paste0(stem, "_scale")
   colnames(out) <- stem
   if(return.all) out <- cbind(data, out)
-  out
+  data.frame(out)
 }
