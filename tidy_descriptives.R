@@ -22,8 +22,10 @@ tidy_descriptives <- function(.data, .cols, .fns, ...){
   }
   
   if(is_grouped_df(.data)){
-    n_groups <- seq_along(groups(.data))
-    pivot_cols <- substitute(-n_groups)
+    # n_groups <- seq_along(groups(.data))
+    # pivot_cols <- substitute(-n_groups)
+    groups <- group_vars(.data)
+    pivot_cols <- substitute(-groups)
   } else {
     pivot_cols <- substitute(everything())
   }
@@ -38,7 +40,8 @@ tidy_descriptives <- function(.data, .cols, .fns, ...){
          .cols = !!.cols,
          .fns = !!.fns,
          .names = .names
-      )
+      ),
+      .groups = "drop"
     )%>%
     pivot_longer(
       cols = !!pivot_cols,
