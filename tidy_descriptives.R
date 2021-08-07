@@ -39,7 +39,8 @@ tidy_descriptives <- function(.data, .cols, .fns, ...){
       across(
          .cols = !!.cols,
          .fns = !!.fns,
-         .names = .names
+         .names = .names,
+         ...
       ),
       .groups = "drop"
     )%>%
