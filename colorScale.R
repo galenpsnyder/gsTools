@@ -41,23 +41,23 @@ heatColors <- function(x, col, out = "hex", na = "#FFFFFF") {
   }
 }
 
-x <- matrix(
-  c(
-    1, 2, 2.1, 2.2, 2.3, 3, 3.1, 3.2, 3.3, 4, 5,
-    1, 2, 2.2, 2.4, 2.6, 3, 3.2, 3.4, 3.6, 4, 5,
-    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11
-  ),
-  nrow = 11
-)
-
-# try with hex
-pal <- apply(x, 2, heatColors, col = c("#F8696B", "#FFEB84", "#63BE7B"))
-# try with rgb
-pal <- apply(x, 2, heatColors, col = col2rgb(c("#F8696B", "#FFEB84", "#63BE7B")))
-
-image(
-  x = seq_len(nrow(pal)),
-  y = seq_len(ncol(pal)),
-  z = matrix(seq_along(x), ncol = ncol(x)),
-  col = pal
-)
+# x <- matrix(
+#   c(
+#     1, 2, 2.1, 2.2, 2.3, 3, 3.1, 3.2, 3.3, 4, 5,
+#     1, 2, 2.2, 2.4, 2.6, 3, 3.2, 3.4, 3.6, 4, 5,
+#     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11
+#   ),
+#   nrow = 11
+# )
+# 
+# # try with hex
+# pal <- apply(x, 2, heatColors, col = c("#F8696B", "#FFEB84", "#63BE7B"))
+# # try with rgb
+# pal <- apply(x, 2, heatColors, col = col2rgb(c("#F8696B", "#FFEB84", "#63BE7B")))
+# 
+# image(
+#   x = seq_len(nrow(pal)),
+#   y = seq_len(ncol(pal)),
+#   z = matrix(seq_along(x), ncol = ncol(x)),
+#   col = pal
+# )
