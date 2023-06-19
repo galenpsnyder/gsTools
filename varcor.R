@@ -53,6 +53,8 @@ varcor <- function(x, y = NULL, adjust = TRUE, na.rm = TRUE, upper = FALSE,
     COL <- col(v)
     rgc <- which(ROW > COL)
     v  <- v[rgc]
+    t  <- v * sqrt((nn - 2) / (1 - v^2))
+    p  <- 2 * pt(-abs(t), nn - 2)
     se <- sqrt((1 - v^2) / (nn - 2))
     zr <- 0.5 * log((1 + v) / (1 - v))
     zq <- qnorm(alpha/2, 0, 1, lower.tail = FALSE)
@@ -62,12 +64,15 @@ varcor <- function(x, y = NULL, adjust = TRUE, na.rm = TRUE, upper = FALSE,
     cu <- exp(2 * (zr + zi))
     cu <- (cu - 1) / (cu + 1)
     v  <- data.frame(
+      x    = ynames[COL[rgc]],
+      y    = xnames[ROW[rgc]],
       cor  = v,
-      df   = nn - 2,
+      t    = t,
       se   = se,
+      p    = p,
+      df   = nn - 2,
       ci.l = cl,
-      ci.u = cu,
-      row.names = paste(ynames[COL[rgc]], xnames[ROW[rgc]],  sep = "-")
+      ci.u = cu
     )
   } else {
     dimnames(v) <- list(xnames, ynames)
